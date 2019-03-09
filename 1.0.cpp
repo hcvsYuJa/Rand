@@ -4,6 +4,7 @@
 #include<ctime>//時間函數
 #include<fstream>//讀檔案
 #include<windows.h>//延時 
+#define MA3 3 
 using namespace std;//使用命名空間std。
 //=========宣告副程式=======================================================================================
 void Ra_setting(int*);//讀取基礎設定 
@@ -73,7 +74,7 @@ void Ra_setting(int*L)//讀取基礎設定檔案
 
 	do
 	{setting.getline(SI,150);//從Basic_setting.txt讀取一行至SI這個字元陣列內，後面的150是元素量。 
-	if(SI[0]=='#')Rsi=1;//第一個井字號讀第一部分。 
+	if(SI[0]=='#')Rsi+=1;//第一個井字號讀第一部分。 
 	} 
 	while(SI[0]=='#');//「#」字開頭為註解行，不讀取 
 	//====讀取抽取量預設值======。 
@@ -87,12 +88,12 @@ void Ra_setting(int*L)//讀取基礎設定檔案
 		}
 	}
 	else X=0;
-	//=========讀取被抽筆數====== 
+	//=========讀取不被抽的筆數====== 
 	do
 	{setting.getline(SI,150);//從Basic_setting.txt讀取一行至SI這個字元陣列內，後面的150是元素量。 
-	if(SI[0]=='#')Rsi=2;//第一個井字號讀第一部分。 
+	if(SI[0]=='#'&&Rsi<=MA3)Rsi+=1;//第一個井字號讀第一部分。 
 	} 
-	while(SI[0]=='#');//「#」字開頭為註解行，不讀取。 
+	while(SI[0]=='#'&&Rsi<=MA3);//「#」字開頭為註解行，不讀取。 
 	for(Leave_i=0;Leave_i<NofP&&Rsi==2;Leave_i++)
 	{
 		for(i=0;'0'<=SI[i]&&SI[i]<='9'&&i<sizeof(SI);i++)//如果該行開頭讀到字元'1'~'9'就進入迴圈，而後i重複加一判定到SI陣列的最後。 
